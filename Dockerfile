@@ -3,19 +3,14 @@ FROM nginx:1.17.9
 RUN apt-get update && apt-get -y upgrade && apt-get install -y \
 spawn-fcgi \ 
 fcgiwrap \
-unzip 
-
-
-RUN apt-get update && apt-get -y upgrade && apt-get install -y \
+mariadb-client \
+unzip \
 imagemagick \
 perlmagick \
 libgd-perl \
 libcache-memcached-perl \
 libarchive-zip-perl \
-libauthen-sasl-perl
-
-
-RUN apt-get update && apt-get -y upgrade && apt-get install -y \
+libauthen-sasl-perl \
 libcrypt-dsa-perl \
 libio-socket-ssl-perl \
 libxml-atom-perl \
@@ -25,9 +20,6 @@ libxml-sax-expatxs-perl \
 build-essential \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
-
-RUN apt-get update && apt-get -y upgrade && apt-get install -y \
-mariadb-client
 
 EXPOSE 80
 
@@ -52,5 +44,4 @@ RUN chmod +x /docker-entrypoint.sh
 COPY default.conf /etc/nginx/conf.d/
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
-# http://localhost/cgi-bin/mt-check.cgi
 
