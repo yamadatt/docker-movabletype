@@ -18,12 +18,12 @@ terraform {
 
 
 module "db" {
-  source   = "./modules/db"
-  env      = local.env
-  db       = local.db
-  vpc-id = aws_vpc.main.id
-  subnet-public-1a-id  = aws_subnet.public1.id
-  subnet-public-1c-id  = aws_subnet.public2.id
+  source              = "./modules/db"
+  env                 = local.env
+  db                  = local.db
+  vpc-id              = aws_vpc.main.id
+  subnet-public-1a-id = aws_subnet.public1.id
+  subnet-public-1c-id = aws_subnet.public2.id
 }
 
 output "db_host" {

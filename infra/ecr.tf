@@ -1,5 +1,5 @@
 resource "aws_ecr_repository" "main" {
-  name         = "docker-mt-lamp-web"
+  name = "docker-mt-lamp-web"
   #force_delete = true
 }
 

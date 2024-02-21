@@ -28,7 +28,7 @@ resource "aws_lb_target_group" "main" {
   vpc_id      = aws_vpc.main.id
   target_type = "ip"
 
-   health_check {
+  health_check {
     enabled             = true
     healthy_threshold   = 5
     interval            = 30

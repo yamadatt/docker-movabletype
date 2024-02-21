@@ -20,16 +20,16 @@ variable "db" {
 
   })
 }
-variable    "vpc-id"{}
-variable    "subnet-public-1a-id"    {}
-variable "subnet-public-1c-id"     {}
+variable "vpc-id" {}
+variable "subnet-public-1a-id" {}
+variable "subnet-public-1c-id" {}
 
 # variable "ars_list" {}
 
 # RDS
 resource "aws_db_subnet_group" "public-db" {
   name       = "${var.env}-public-db"
-  subnet_ids = ["${var.subnet-public-1a-id}"  , "${var.subnet-public-1c-id}" ]
+  subnet_ids = ["${var.subnet-public-1a-id}", "${var.subnet-public-1c-id}"]
   tags = {
     Name = "${var.env}-public-db"
   }
@@ -39,7 +39,7 @@ resource "aws_db_subnet_group" "public-db" {
 resource "aws_security_group" "public-db-sg" {
   # for_each = var.ars_list.server
   name   = "${var.env}-public-db-sg"
-  vpc_id = "${var.vpc-id}"
+  vpc_id = var.vpc-id
   # count = "${length(var.ars_list.server)}"
   tags = {
     Name = "public-db-sg"
@@ -48,27 +48,27 @@ resource "aws_security_group" "public-db-sg" {
 
 
 resource "aws_security_group_rule" "inbound_ars" {
-  type        = "ingress"
-  from_port   = 0
-  to_port     = 3306
-  protocol    = "tcp"
+  type      = "ingress"
+  from_port = 0
+  to_port   = 3306
+  protocol  = "tcp"
   cidr_blocks = [
     "0.0.0.0/0"
   ]
-  description = "ars-"
-  security_group_id = "${aws_security_group.public-db-sg.id}"
+  description       = "ars-"
+  security_group_id = aws_security_group.public-db-sg.id
 }
 
 
 resource "aws_security_group_rule" "outbound" {
-  type        = "egress"
-  from_port   = 0
-  to_port     = 0
-  protocol    = "-1"
+  type      = "egress"
+  from_port = 0
+  to_port   = 0
+  protocol  = "-1"
   cidr_blocks = [
     "0.0.0.0/0"
   ]
-  security_group_id = "${aws_security_group.public-db-sg.id}"
+  security_group_id = aws_security_group.public-db-sg.id
 }
 
 
