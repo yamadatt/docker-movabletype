@@ -6,7 +6,7 @@
   - [1.3. 手順](#13-手順)
     - [1.3.1. 手順概要](#131-手順概要)
     - [1.3.2. AWSリソースの構築](#132-awsリソースの構築)
-    - [1.3.3. GitHubの事前準備](#133-githubの事前準備)
+    - [1.3.3. GitHubActionsの事前準備](#133-githubactionsの事前準備)
     - [1.3.4. default.confの書き換え](#134-defaultconfの書き換え)
     - [1.3.5. GitHubへのPUSH](#135-githubへのpush)
     - [1.3.6. 動作確認](#136-動作確認)
@@ -21,7 +21,7 @@
 
 ECSでMovableTypeで動作するかの検証をするためのリポジトリ。
 
-この```README.md```はこの環境を動かすための手順を示しています。
+この```README.md```はその手順を示しています。
 
 ## 1.2. 構成概要
 
@@ -43,7 +43,7 @@ MovableTypeはECS、データベースはRDS（mysql）で実装しています�
 大きく以下の順番で構築します。
 
 - terraformでAWSのリソースを構築する
-- GitHubActionsでMovableTypeをデプロイする
+- GitHubActionsでMovableTypeをデプロイする（DockerイメージのビルドからECSタスクへのデプロイまで実施）
 
 ### 1.3.2. AWSリソースの構築
 
@@ -67,16 +67,17 @@ terraform plan
 terraform apply --auto-approve
 ```
 
-適用後にALBのDNS名、ECRのリポジトリURLが表示されます。後のコード書き換えやGitHubActionsの設定に使用するためメモします。
+適用後にALBのDNS名、ECRのリポジトリURLが表示されます。後続の作業でコード書き換えやGitHubActionsの設定に使用するためメモします。
 
 ```
+（例）
 ALB_DNS_NAME   = "mt-ecs-alb-268228500.ap-northeast-1.elb.amazonaws.com"
 repository_url = "999999999.dkr.ecr.ap-northeast-1.amazonaws.com/docker-mt-lamp-web"
 ```
 
-### 1.3.3. GitHubの事前準備
+### 1.3.3. GitHubActionsの事前準備
 
-リポジトリのSECRETSを設定します。
+GitHubのリポジトリから、SECRETSを設定します。
 
 ![](img/01.jpg)
 
@@ -101,7 +102,7 @@ PUSHすることでGitHubActionsが動き、MovableTypeがECSで動きます。
 
 ### 1.3.6. 動作確認
 
-メモしているALBのDNS名をブラウザでアクセスします。
+ブラウザにて、メモしているALBのDNS名にアクセスします。
 
 アクセスする際に以下のようにパス```/cgi-bin/mt/```をつけてください。
 
@@ -118,6 +119,20 @@ PUSHすることでGitHubActionsが動き、MovableTypeがECSで動きます。
 ```
 docker build . -t test
 ```
+
+以下のコマンドでイメージが作成されたかを確認します。
+
+```
+docker images
+```
+
+以下のように表示されます。
+
+```
+REPOSITORY                              TAG       IMAGE ID       CREATED         SIZE
+test                                    latest    01a545c91c21   2 minutes ago   553MB
+```
+
 
 ### 1.4.2. 動作確認で使用したツール
 
