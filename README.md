@@ -21,7 +21,7 @@
 
 ECSでMovableTypeで動作するかの検証をするためのリポジトリ。
 
-動作するための手順を示しています。
+この```README.md```はこの環境を動かすための手順を示しています。
 
 ## 1.2. 構成概要
 
@@ -47,7 +47,7 @@ MovableTypeはECS、データベースはRDS（mysql）で実装しています�
 
 ### 1.3.2. AWSリソースの構築
 
-以下のコマンドによりterraformでAWSのリソースを構築します。
+infraディレクトリにterraformのファイル群を格納しています。以下のコマンドによりterraformでAWSのリソースを構築します。
 
 初期化
 
@@ -67,7 +67,7 @@ terraform plan
 terraform apply --auto-approve
 ```
 
-適用後にALBのDNS名、ECRのリポジトリURLが表示されます。書き換えに使用するため、メモします。
+適用後にALBのDNS名、ECRのリポジトリURLが表示されます。後のコード書き換えやGitHubActionsの設定に使用するためメモします。
 
 ```
 ALB_DNS_NAME   = "mt-ecs-alb-268228500.ap-northeast-1.elb.amazonaws.com"
@@ -84,7 +84,7 @@ SECRETSは以下を登録します。
 
 - AWS_ACCESS_KEY_ID・・・アクセスキー
 - AWS_SECRET_ACCESS_KEY・・・シークレットアクセスキー
-- ECR_REGISTRY・・・ECRのリポジトリ(上の手順でメモったrepository_url。例：999999999.dkr.ecr.ap-northeast-1.amazonaws.com) 
+- ECR_REGISTRY・・・ECRのリポジトリ(上の手順でメモったrepository_url。例：999999999.dkr.ecr.ap-northeast-1.amazonaws.com　「/docker-mt-lamp-web」は不要) 
 
 
 ### 1.3.4. default.confの書き換え
@@ -95,9 +95,9 @@ SECRETSは以下を登録します。
 
 ### 1.3.5. GitHubへのPUSH
 
-コードを書き換え後、GitHubにPUSHします。
+```default.conf```を書き換えた後、GitHubにPUSHします。
 
-PUSHすることでGitHubActionsによりMovableTypeがECSで動きます。
+PUSHすることでGitHubActionsが動き、MovableTypeがECSで動きます。
 
 ### 1.3.6. 動作確認
 
