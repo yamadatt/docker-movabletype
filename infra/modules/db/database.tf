@@ -96,6 +96,8 @@ resource "aws_db_instance" "db" {
 
 # --------------------------------
 #  output
-output "security_group" {
-  value = aws_security_group.public-db-sg
+
+
+output "db_host" {
+  value = aws_db_instance.db.endpoint
 }

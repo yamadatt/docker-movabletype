@@ -8,8 +8,9 @@
     - [1.3.2. AWSリソースの構築](#132-awsリソースの構築)
     - [1.3.3. GitHubActionsの事前準備](#133-githubactionsの事前準備)
     - [1.3.4. default.confの書き換え](#134-defaultconfの書き換え)
-    - [1.3.5. GitHubへのPUSH](#135-githubへのpush)
-    - [1.3.6. 動作確認](#136-動作確認)
+    - [1.3.5. mt-config.cgiの書き換え](#135-mt-configcgiの書き換え)
+    - [1.3.6. GitHubへのPUSH](#136-githubへのpush)
+    - [1.3.7. 動作確認](#137-動作確認)
   - [1.4. 参考](#14-参考)
     - [1.4.1. ECSで動作するDockerImageの作成手順](#141-ecsで動作するdockerimageの作成手順)
     - [1.4.2. 動作確認で使用したツール](#142-動作確認で使用したツール)
@@ -67,11 +68,12 @@ terraform plan
 terraform apply --auto-approve
 ```
 
-適用後にALBのDNS名、ECRのリポジトリURLが表示されます。後続の作業でコード書き換えやGitHubActionsの設定に使用するためメモします。
+適用後にALBのDNS名、DBのエンドポイント、ECRのリポジトリURLが表示されます。後続の作業でコード書き換えやGitHubActionsの設定に使用するためメモします。
 
 ```
 （例）
-ALB_DNS_NAME   = "mt-ecs-alb-268228500.ap-northeast-1.elb.amazonaws.com"
+ALB_DNS_NAME = "mt-ecs-alb-697782372.ap-northeast-1.elb.amazonaws.com"
+db_host = "poc-db.cl2fcorccc8w.ap-northeast-1.rds.amazonaws.com:3306"
 repository_url = "999999999.dkr.ecr.ap-northeast-1.amazonaws.com/docker-mt-lamp-web"
 ```
 
@@ -94,13 +96,19 @@ SECRETSは以下を登録します。
 
 ![](img/02.jpg)
 
-### 1.3.5. GitHubへのPUSH
+### 1.3.5. mt-config.cgiの書き換え
+
+[mt-config.cgi](mt-config.cgi)のDBHostを上でメモしたdb_hostに書き換えます。（ポート番号は不要です）
+
+![](img/03.jpg)
+
+### 1.3.6. GitHubへのPUSH
 
 ```default.conf```を書き換えた後、GitHubにPUSHします。
 
 PUSHすることでGitHubActionsが動き、MovableTypeがECSで動きます。
 
-### 1.3.6. 動作確認
+### 1.3.7. 動作確認
 
 ブラウザにて、メモしているALBのDNS名にアクセスします。
 
