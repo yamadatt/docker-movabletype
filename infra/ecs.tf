@@ -2,6 +2,8 @@ locals {
   container_name = "mt-ecs"
 }
 
+data "aws_caller_identity" "self"{}
+
 resource "aws_ecs_cluster" "main" {
   name = "mt-ecs-cluster"
 }
@@ -17,7 +19,7 @@ resource "aws_ecs_task_definition" "main" {
   [
     {
         "name": "${local.container_name}",
-        "image": "449671225256.dkr.ecr.ap-northeast-1.amazonaws.com/docker-mt-lamp-web",
+        "image": "${data.aws_caller_identity.self.account_id}.dkr.ecr.ap-northeast-1.amazonaws.com/docker-mt-lamp-web",
         "portMappings": [
             {
                 "name": "${local.container_name}",
