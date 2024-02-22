@@ -65,7 +65,7 @@ jobs:
 
       # AWSのアカウントIDをsedで書き換え
       - name: rewrite task-definition
-        run: sed -i -e s/SED_TARGET_AWS_ACCOUNT_ID/${{ secrets.AWS_ACCOUNT_ID }}/g ${{ env.CONTAINER_NAME }}
+        run: sed -i -e s/SED_TARGET_AWS_ACCOUNT_ID/${{ secrets.AWS_ACCOUNT_ID }}/g ${{ env.ECS_TASK_DEFINITION }}
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
