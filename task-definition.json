@@ -2,7 +2,7 @@
   "containerDefinitions": [
     {
       "name": "mt-ecs",
-      "image": "449671225256.dkr.ecr.ap-northeast-1.amazonaws.com/docker-mt-lamp-web",
+      "image": "SED_TARGET_AWS_ACCOUNT_ID.dkr.ecr.ap-northeast-1.amazonaws.com/docker-mt-lamp-web",
       "cpu": 0,
       "portMappings": [
         {
@@ -30,7 +30,7 @@
     }
   ],
   "family": "mt-ecs-task-definition",
-  "executionRoleArn": "arn:aws:iam::449671225256:role/ecsTaskRole",
+  "executionRoleArn": "arn:aws:iam::SED_TARGET_AWS_ACCOUNT_ID:role/ecsTaskRole",
   "networkMode": "awsvpc",
   "volumes": [],
   "placementConstraints": [],
@@ -44,5 +44,5 @@
   "cpu": "1024",
   "memory": "2048",
   "registeredAt": "2024-02-18T22:27:34.999000+09:00",
-  "registeredBy": "arn:aws:iam::449671225256:root"
+  "registeredBy": "arn:aws:iam::SED_TARGET_AWS_ACCOUNT_ID:root"
 }
