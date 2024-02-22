@@ -1,5 +1,10 @@
 # 1. ECSでMovableTypeを動かす
 
+ToDo
+
+手数を減らすために、ECRのアカウントIDを変数でもたせる。
+
+
 - [1. ECSでMovableTypeを動かす](#1-ecsでmovabletypeを動かす)
   - [1.1. このリポジトリは？](#11-このリポジトリは)
   - [1.2. 構成概要](#12-構成概要)
@@ -48,7 +53,7 @@ MovableTypeはECS、データベースはRDS（mysql）で実装しています�
 
 ### 1.3.2. AWSリソースの構築
 
-infraディレクトリにterraformのファイル群を格納しています。以下のコマンドによりterraformでAWSのリソースを構築します。
+infraディレクトリにterraformのファイル群を格納しています。以下のコマンドによりterraformでAWSのリソースを構築します。なお、リージョンは東京を使用します。
 
 初期化
 
