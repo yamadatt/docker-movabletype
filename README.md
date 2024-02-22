@@ -25,7 +25,7 @@ ToDo
 
 ## 1.1. このリポジトリは？
 
-ECSでMovableTypeで動作するかの検証をするためのリポジトリ。
+ECSでMovableTypeで動作するかの検証をするためのリポジトリです。
 
 この```README.md```はその手順を示しています。
 
@@ -53,7 +53,7 @@ MovableTypeはECS、データベースはRDS（mysql）で実装しています�
 
 ### 1.3.2. AWSリソースの構築
 
-infraディレクトリにterraformのファイル群を格納しています。以下のコマンドによりterraformでAWSのリソースを構築します。なお、リージョンは東京を使用します。
+infraディレクトリにterraformのファイル群を格納しています。以下のコマンドによりterraformでAWSのリソースを構築します。リージョンは東京を使用します。
 
 初期化
 
@@ -86,13 +86,15 @@ repository_url = "999999999.dkr.ecr.ap-northeast-1.amazonaws.com/docker-mt-lamp-
 
 GitHubのリポジトリから、SECRETSを設定します。
 
-![](img/01.jpg)
+![](img/01_secrets.jpg)
 
 SECRETSは以下を登録します。
 
 - AWS_ACCESS_KEY_ID・・・アクセスキー
 - AWS_SECRET_ACCESS_KEY・・・シークレットアクセスキー
-- ECR_REGISTRY・・・ECRのリポジトリ(上の手順でメモったrepository_url。例：999999999.dkr.ecr.ap-northeast-1.amazonaws.com　「/docker-mt-lamp-web」は不要) 
+- ECR_REGISTRY・・・ECRのリポジトリ(上の手順でメモったrepository_url。例：```999999999.dkr.ecr.ap-northeast-1.amazonaws.com```　「/docker-mt-lamp-web」は不要) 
+- AWS_ACCOUNT_ID・・・ご自身のAWSアカウントID 
+  
 
 
 ### 1.3.4. default.confの書き換え
@@ -109,9 +111,9 @@ SECRETSは以下を登録します。
 
 ### 1.3.6. GitHubへのPUSH
 
-```default.conf```を書き換えた後、GitHubにPUSHします。
+ファイルを書き換えた後、GitHubにPUSHします。
 
-PUSHすることでGitHubActionsが動き、MovableTypeがECSで動きます。
+mainへのPUSHをきっかけに、GitHubActionsが動き、MovableTypeがECSで動作します。
 
 ### 1.3.7. 動作確認
 
@@ -145,7 +147,6 @@ docker images
 REPOSITORY                              TAG       IMAGE ID       CREATED         SIZE
 test                                    latest    01a545c91c21   2 minutes ago   553MB
 ```
-
 
 ### 1.4.2. 動作確認で使用したツール
 
