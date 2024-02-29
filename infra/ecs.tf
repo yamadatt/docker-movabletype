@@ -16,38 +16,83 @@ resource "aws_ecs_task_definition" "main" {
   execution_role_arn       = aws_iam_role.ecs_execution.arn
   task_role_arn            = aws_iam_role.ecs_task.arn
   network_mode             = "awsvpc"
-  container_definitions    = <<-EOS
-  [
+  container_definitions = jsonencode([
     {
-        "name": "${local.container_name}",
-        "image": "${data.aws_caller_identity.self.account_id}.dkr.ecr.ap-northeast-1.amazonaws.com/docker-mt-lamp-web",
-        "portMappings": [
-            {
-                "name": "${local.container_name}",
-                "containerPort": 80,
-                "hostPort": 80,
-                "protocol": "tcp",
-                "appProtocol": "http"
-            }
-        ],
-        "essential": true,
-        "logConfiguration": {
-            "logDriver": "awslogs",
-            "options": {
-                "awslogs-create-group": "true",
-                "awslogs-group": "/ecs/yamada-ecs-task-definition",
-                "awslogs-region": "ap-northeast-1",
-                "awslogs-stream-prefix": "ecs"
-            }
+      name      = "${local.container_name}"
+      image     = "${data.aws_caller_identity.self.account_id}.dkr.ecr.ap-northeast-1.amazonaws.com/docker-mt-lamp-web"
+      essential = true
+      portMappings = [
+        {
+          name          = "${local.container_name}"
+          containerPort = 80
+          hostPort      = 80
+          protocol      = "tcp"
+          appProtocol   = "http"
         }
+      ]
+      mountPoints = [
+        {
+          containerPath = "/usr/share/nginx/html"
+          sourceVolume  = "fargate-efs"
+        }
+      ]
+      essential = true
+      logConfiguration = {
+        logDriver : "awslogs"
+        options = {
+          awslogs-create-group  = "true"
+          awslogs-group         = "/ecs/yamada-ecs-task-definition"
+          awslogs-region        = "ap-northeast-1"
+          awslogs-stream-prefix = "ecs"
+        }
+      }
     }
-  ]
-  EOS
+  ])
   runtime_platform {
     cpu_architecture        = "X86_64"
     operating_system_family = "LINUX"
   }
+  volume {
+    name = "fargate-efs"
+    efs_volume_configuration {
+      file_system_id = aws_efs_file_system.efs.id
+      root_directory = "/"
+    }
+  }
+
 }
+  # container_definitions    = <<-EOS
+  # [
+  #   {
+  #       "name": "${local.container_name}",
+  #       "image": "${data.aws_caller_identity.self.account_id}.dkr.ecr.ap-northeast-1.amazonaws.com/docker-mt-lamp-web",
+  #       "portMappings": [
+  #           {
+  #               "name": "${local.container_name}",
+  #               "containerPort": 80,
+  #               "hostPort": 80,
+  #               "protocol": "tcp",
+  #               "appProtocol": "http"
+  #           }
+  #       ],
+  #       "essential": true,
+  #       "logConfiguration": {
+  #           "logDriver": "awslogs",
+  #           "options": {
+  #               "awslogs-create-group": "true",
+  #               "awslogs-group": "/ecs/yamada-ecs-task-definition",
+  #               "awslogs-region": "ap-northeast-1",
+  #               "awslogs-stream-prefix": "ecs"
+  #           }
+  #       }
+  #   }
+  # ]
+  # EOS
+#   runtime_platform {
+#     cpu_architecture        = "X86_64"
+#     operating_system_family = "LINUX"
+#   }
+# }
 
 resource "aws_ecs_service" "main" {
   name            = "mt-ecs-service"
