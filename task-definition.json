@@ -2,7 +2,7 @@
   "containerDefinitions": [
     {
       "name": "mt-ecs",
-      "image": "449671225256.dkr.ecr.ap-northeast-1.amazonaws.com/docker-mt-lamp-web:7d451239f0c93b90bee294131f6d41c68f739d03",
+      "image": "449671225256.dkr.ecr.ap-northeast-1.amazonaws.com/docker-mt-lamp-web",
       "cpu": 0,
       "portMappings": [
         {
@@ -15,7 +15,7 @@
       ],
       "essential": true,
       "environment": [],
-
+      "mountPoints": [],
       "volumesFrom": [],
       "logConfiguration": {
         "logDriver": "awslogs",
@@ -30,17 +30,10 @@
     }
   ],
   "family": "mt-ecs-task-definition",
-  "executionRoleArn": "arn:aws:iam::449671225256:role/ecsTaskRole",
+  "taskRoleArn": "arn:aws:iam::449671225256:role/yamada_ecs_task_role_name",
+  "executionRoleArn": "arn:aws:iam::449671225256:role/ecsTasExecRole",
   "networkMode": "awsvpc",
-  "volumes": [
-    {
-      "name": "fargate-efs",
-      "efsVolumeConfiguration": {
-        "fileSystemId": "fs-0fa25a324d76b10b4",
-        "rootDirectory": "/"
-      }
-    }
-  ],
+  "volumes": [],
   "placementConstraints": [],
   "runtimePlatform": {
     "cpuArchitecture": "X86_64",
@@ -51,6 +44,6 @@
   ],
   "cpu": "1024",
   "memory": "2048",
-  "registeredAt": "2024-02-29T22:45:32.284000+09:00",
+  "registeredAt": "2024-03-01T07:30:52.856000+09:00",
   "registeredBy": "arn:aws:iam::449671225256:user/yamada"
 }
