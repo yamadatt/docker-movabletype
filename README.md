@@ -16,6 +16,7 @@
     - [1.4.2. 動作確認で使用したツール](#142-動作確認で使用したツール)
       - [1.4.2.1. Docker](#1421-docker)
       - [1.4.2.2. Terraform](#1422-terraform)
+  - [ECS Execの確認](#ecs-execの確認)
 
 
 ## 1.1. このリポジトリは？
@@ -185,3 +186,45 @@ Server: Docker Engine - Community
 Terraform v1.7.3
 on linux_amd64
 ```
+
+
+## ECS Execの確認
+
+サービスのexec確認。
+
+aws ecs describe-services \
+--cluster mt-ecs-cluster \
+--services mt-ecs-service \
+--query 'services[0].enableExecuteCommand'
+
+
+タスクIDの確認
+
+aws ecs list-tasks \
+--cluster mt-ecs-cluster \
+--service mt-ecs-service
+
+以下の出力。
+
+{
+    "taskArns": [
+        "arn:aws:ecs:ap-northeast-1:449671225256:task/mt-ecs-cluster/21579dc134ea4dd183ddcf182cec412e"
+    ]
+}
+
+
+task no Exec確認
+
+aws ecs describe-tasks \
+--cluster mt-ecs-cluster \
+--tasks 21579dc134ea4dd183ddcf182cec412e \
+--query 'tasks[0].enableExecuteCommand'
+
+trueならOK
+
+aws ecs execute-command \
+--cluster mt-ecs-cluster \
+--task 21579dc134ea4dd183ddcf182cec412e \
+--container mt-ecs \
+--interactive \
+--command /bin/sh

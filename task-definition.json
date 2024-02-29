@@ -15,7 +15,12 @@
       ],
       "essential": true,
       "environment": [],
-      "mountPoints": [],
+      "mountPoints": [
+        {
+          "sourceVolume": "fargate-efs",
+          "containerPath": "/usr/share/nginx/html/test"
+        }
+      ],
       "volumesFrom": [],
       "logConfiguration": {
         "logDriver": "awslogs",
@@ -52,6 +57,6 @@
   ],
   "cpu": "1024",
   "memory": "2048",
-  "registeredAt": "2024-03-01T08:06:50.812000+09:00",
+  "registeredAt": "2024-03-01T08:30:06.262000+09:00",
   "registeredBy": "arn:aws:iam::449671225256:user/yamada"
 }

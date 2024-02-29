@@ -30,12 +30,12 @@ resource "aws_ecs_task_definition" "main" {
           appProtocol   = "http"
         }
       ]
-      # mountPoints = [
-      #   {
-      #     containerPath = "/usr/share/nginx/html"
-      #     sourceVolume  = "fargate-efs"
-      #   }
-      # ]
+      mountPoints = [
+        {
+          containerPath = "/usr/share/nginx/html/test"
+          sourceVolume  = "fargate-efs"
+        }
+      ]
       essential = true
       logConfiguration = {
         logDriver : "awslogs"
@@ -99,7 +99,7 @@ resource "aws_ecs_service" "main" {
   cluster         = aws_ecs_cluster.main.id
   task_definition = aws_ecs_task_definition.main.arn
   launch_type     = "FARGATE"
-  # enable_execute_command = true #ECS EXECの有効
+  enable_execute_command = true #ECS EXECの有効
   desired_count = 1
 
 
