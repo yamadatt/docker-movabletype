@@ -2,7 +2,7 @@
   "containerDefinitions": [
     {
       "name": "mt-ecs",
-      "image": "449671225256.dkr.ecr.ap-northeast-1.amazonaws.com/docker-mt-lamp-web:583f5bdda35b789036801dc0b7ff5bd3eb85a988",
+      "image": "449671225256.dkr.ecr.ap-northeast-1.amazonaws.com/docker-mt-lamp-web:d699cfda4aff6c30d24e6258800180f125a16aa7",
       "cpu": 0,
       "portMappings": [
         {
@@ -56,6 +56,6 @@
   ],
   "cpu": "1024",
   "memory": "2048",
-  "registeredAt": "2024-02-29T22:14:43.558000+09:00",
+  "registeredAt": "2024-02-29T22:22:11.143000+09:00",
   "registeredBy": "arn:aws:iam::449671225256:user/yamada"
 }
