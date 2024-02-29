@@ -18,7 +18,7 @@
       "mountPoints": [
         {
           "sourceVolume": "fargate-efs",
-          "containerPath": "/usr/share/nginx/html/test"
+          "containerPath": "/usr/share/nginx/html"
         }
       ],
       "volumesFrom": [],
@@ -57,6 +57,6 @@
   ],
   "cpu": "1024",
   "memory": "2048",
-  "registeredAt": "2024-03-01T08:30:06.262000+09:00",
+  "registeredAt": "2024-03-01T08:40:17.535000+09:00",
   "registeredBy": "arn:aws:iam::449671225256:user/yamada"
 }
