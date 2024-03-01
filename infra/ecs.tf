@@ -32,7 +32,7 @@ resource "aws_ecs_task_definition" "main" {
       ]
       mountPoints = [
         {
-          containerPath = "/usr/share/nginx/html"
+          containerPath = "/usr/share/nginx/html/test"
           sourceVolume  = "fargate-efs"
         }
       ]
