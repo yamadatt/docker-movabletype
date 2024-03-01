@@ -192,39 +192,47 @@ on linux_amd64
 
 サービスのexec確認。
 
+```bash
 aws ecs describe-services \
 --cluster mt-ecs-cluster \
 --services mt-ecs-service \
 --query 'services[0].enableExecuteCommand'
-
+```
 
 タスクIDの確認
 
+```bash
 aws ecs list-tasks \
 --cluster mt-ecs-cluster \
 --service mt-ecs-service
+```
 
 以下の出力。
 
+```json
 {
     "taskArns": [
         "arn:aws:ecs:ap-northeast-1:449671225256:task/mt-ecs-cluster/21579dc134ea4dd183ddcf182cec412e"
     ]
 }
-
+```
 
 task no Exec確認
 
+```bash
 aws ecs describe-tasks \
 --cluster mt-ecs-cluster \
 --tasks 21579dc134ea4dd183ddcf182cec412e \
 --query 'tasks[0].enableExecuteCommand'
+```
 
 trueならOK
 
+```bash
 aws ecs execute-command \
 --cluster mt-ecs-cluster \
---task 21579dc134ea4dd183ddcf182cec412e \
+--task 379c855a91184e65875b6bfd593f6519 \
 --container mt-ecs \
 --interactive \
 --command /bin/sh
+```
