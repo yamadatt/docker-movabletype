@@ -34,6 +34,7 @@ resource "aws_ecs_task_definition" "main" {
         {
           containerPath = "/usr/share/nginx/html/test"
           sourceVolume  = "fargate-efs"
+          readOnly = false
         }
       ]
       essential = true

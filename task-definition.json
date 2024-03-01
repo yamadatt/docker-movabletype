@@ -18,7 +18,8 @@
       "mountPoints": [
         {
           "sourceVolume": "fargate-efs",
-          "containerPath": "/usr/share/nginx/html/test"
+          "containerPath": "/usr/share/nginx/html/test",
+          "readOnly": false
         }
       ],
       "volumesFrom": [],
