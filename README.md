@@ -242,5 +242,7 @@ aws ecs execute-command \
 
 ECSからEFSのマウントで以下のエラー。
 
+EFSマウント時はtask-definition.jsonのEFS-IDも書き換える。
+
 タスクの停止時刻: 2024-03-01T09:10:32.882Z
 ResourceInitializationError: failed to invoke EFS utils commands to set up EFS volumes: stderr: Failed to resolve "fs-04fae5fe3e661d56e.efs.ap-northeast-1.amazonaws.com" - check that your file system ID is correct, and ensure that the VPC has an EFS mount target for this file system ID. See https://docs.aws.amazon.com/console/efs/mount-dns-name for more detail. Attempting to lookup mount target ip address using botocore. Failed to import necessary dependency botocore, please install botocore first. : unsuccessful EFS utils command execution; code: 1

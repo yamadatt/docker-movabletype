@@ -30,12 +30,12 @@ resource "aws_ecs_task_definition" "main" {
           appProtocol   = "http"
         }
       ]
-      # mountPoints = [
-      #   {
-      #     containerPath = "/usr/share/nginx/html/test"
-      #     sourceVolume  = "fargate-efs"
-      #   }
-      # ]
+      mountPoints = [
+        {
+          containerPath = "/usr/share/nginx/html/test"
+          sourceVolume  = "fargate-efs"
+        }
+      ]
       essential = true
       logConfiguration = {
         logDriver : "awslogs"
