@@ -39,6 +39,7 @@ RUN unzip /usr/share/nginx/html/cgi-bin/mt.zip -d '/usr/share/nginx/html/cgi-bin
 COPY mt-config.cgi /usr/share/nginx/html/cgi-bin/mt
 
 RUN chmod 777 /usr/share/nginx/html
+RUN mkdir /usr/share/nginx/html/test
 RUN chmod 777 /usr/share/nginx/html/test
 RUN chmod 777 /usr/share/nginx/html/cgi-bin/mt
 RUN chmod 777 /usr/share/nginx/html/cgi-bin/mt/mt-static/
