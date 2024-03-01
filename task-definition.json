@@ -15,12 +15,7 @@
       ],
       "essential": true,
       "environment": [],
-      "mountPoints": [
-        {
-          "sourceVolume": "fargate-efs",
-          "containerPath": "/usr/share/nginx/html/test"
-        }
-      ],
+
       "volumesFrom": [],
       "logConfiguration": {
         "logDriver": "awslogs",

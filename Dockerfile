@@ -36,10 +36,14 @@ RUN chmod 755 /usr/share/nginx/html/cgi-bin
 #RUN chmod 777 /usr/share/nginx/html/cgi-bin/hello.cgi
 COPY mt.zip /usr/share/nginx/html/cgi-bin/
 RUN unzip /usr/share/nginx/html/cgi-bin/mt.zip -d '/usr/share/nginx/html/cgi-bin/'
-RUN chmod 777 /usr/share/nginx/html/cgi-bin/mt
 COPY mt-config.cgi /usr/share/nginx/html/cgi-bin/mt
-RUN chmod 777 /usr/share/nginx/html/cgi-bin/mt/mt-static/support
+
 RUN chmod 777 /usr/share/nginx/html
+RUN chmod 777 /usr/share/nginx/html/test
+RUN chmod 777 /usr/share/nginx/html/cgi-bin/mt
+RUN chmod 777 /usr/share/nginx/html/cgi-bin/mt/mt-static/
+RUN chmod 777 /usr/share/nginx/html/cgi-bin/mt/mt-static/support
+
 
 RUN chmod +x /docker-entrypoint.sh
 COPY default.conf /etc/nginx/conf.d/
