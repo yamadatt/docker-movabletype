@@ -18,6 +18,7 @@ libxml-sax-perl \
 libyaml-syck-perl \ 
 libxml-sax-expatxs-perl \
 build-essential \
+amazon-efs-utils \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
