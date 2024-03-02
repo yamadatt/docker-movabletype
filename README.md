@@ -11,14 +11,15 @@
     - [1.3.5. task-definition.json書き換え](#135-task-definitionjson書き換え)
     - [1.3.6. mt-config.cgiの書き換え](#136-mt-configcgiの書き換え)
     - [1.3.7. GitHubへのPUSH](#137-githubへのpush)
-    - [1.3.8. 動作確認](#138-動作確認)
+    - [1.3.8. NFSのアクセス権設定](#138-nfsのアクセス権設定)
+    - [1.3.9. 動作確認](#139-動作確認)
   - [1.4. 参考](#14-参考)
     - [1.4.1. ECSで動作するDockerImageの作成手順](#141-ecsで動作するdockerimageの作成手順)
     - [1.4.2. 動作確認で使用したツール](#142-動作確認で使用したツール)
       - [1.4.2.1. Docker](#1421-docker)
       - [1.4.2.2. Terraform](#1422-terraform)
   - [1.5. ECS Execの確認](#15-ecs-execの確認)
-  - [1.6. エラーメモ](#16-エラーメモ)
+  - [1.6. 記録：エラーメモ](#16-記録エラーメモ)
 
 
 ## 1.1. このリポジトリは？
@@ -130,7 +131,31 @@ SECRETSは以下を登録します。
 
 mainへのPUSHをきっかけに、GitHubActionsが動き、MovableTypeがECSで動作します。
 
-### 1.3.8. 動作確認
+
+### 1.3.8. NFSのアクセス権設定
+
+アクセス権を付与するためコンテナーにアタッチします。
+
+コンテナーにアタッチ後、以下のコマンドでマウントしたEFSのパーミッションを変更します。
+
+コンテナーへのアタッチ。--taskにタスクIDを記入します。
+
+```bash
+aws ecs execute-command \
+--cluster mt-ecs-cluster \
+--task 6ecb0c24c2f147049ff7da682100a9d1 \
+--container mt-ecs \
+--interactive \
+--command /bin/sh
+```
+
+アタッチ後に以下でパーミッションを変更します。
+
+```bash
+chmod 777 /usr/share/nginx/html/test
+```
+
+### 1.3.9. 動作確認
 
 ブラウザにて、メモしているALBのDNS名にアクセスします。
 
@@ -146,19 +171,19 @@ mainへのPUSHをきっかけに、GitHubActionsが動き、MovableTypeがECSで
 
 単体でDockerイメージを作るには、以下のコマンドを使用します。
 
-```
+```bash
 docker build . -t test
 ```
 
 以下のコマンドでイメージが作成されたかを確認します。
 
-```
+```bash
 docker images
 ```
 
 以下のように表示されます。
 
-```
+```bash
 REPOSITORY                              TAG       IMAGE ID       CREATED         SIZE
 test                                    latest    01a545c91c21   2 minutes ago   553MB
 ```
@@ -250,17 +275,17 @@ trueならOK
 ```bash
 aws ecs execute-command \
 --cluster mt-ecs-cluster \
---task ec51be5da28d4227ac11e86d2b2319b2 \
+--task 6ecb0c24c2f147049ff7da682100a9d1 \
 --container mt-ecs \
 --interactive \
 --command /bin/sh
 ```
 
-## 1.6. エラーメモ
+## 1.6. 記録：エラーメモ
 
-ECSからEFSのマウントで以下のエラー。
+ECSからEFSのマウントで以下のエラー。EFSマウント時はtask-definition.jsonのEFS-IDも書き換えること。
 
-EFSマウント時はtask-definition.jsonのEFS-IDも書き換える。
-
+```
 タスクの停止時刻: 2024-03-01T09:10:32.882Z
 ResourceInitializationError: failed to invoke EFS utils commands to set up EFS volumes: stderr: Failed to resolve "fs-04fae5fe3e661d56e.efs.ap-northeast-1.amazonaws.com" - check that your file system ID is correct, and ensure that the VPC has an EFS mount target for this file system ID. See https://docs.aws.amazon.com/console/efs/mount-dns-name for more detail. Attempting to lookup mount target ip address using botocore. Failed to import necessary dependency botocore, please install botocore first. : unsuccessful EFS utils command execution; code: 1
+```
