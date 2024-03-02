@@ -41,3 +41,7 @@ resource "aws_efs_mount_target" "efs_public2" {
   subnet_id       = aws_subnet.public2.id
   security_groups = [aws_security_group.efs_sg.id]
 }
+
+output "fileSystemId" {
+  value = aws_efs_file_system.efs.id
+}
