@@ -42,6 +42,38 @@ resource "aws_efs_mount_target" "efs_public2" {
   security_groups = [aws_security_group.efs_sg.id]
 }
 
+
+
+data "aws_iam_policy_document" "policy" {
+  statement {
+    sid    = "ExampleStatement01"
+    effect = "Allow"
+
+    principals {
+      type        = "AWS"
+      identifiers = ["*"]
+    }
+
+    actions = [
+      "elasticfilesystem:ClientMount",
+      "elasticfilesystem:ClientWrite",
+    ]
+
+    resources = [aws_efs_file_system.efs.arn]
+
+    # condition {
+    #   test     = "Bool"
+    #   variable = "aws:SecureTransport"
+    #   values   = ["true"]
+    # }
+  }
+}
+
+resource "aws_efs_file_system_policy" "policy" {
+  file_system_id = aws_efs_file_system.efs.id
+  policy         = data.aws_iam_policy_document.policy.json
+}
+
 output "fileSystemId" {
   value = aws_efs_file_system.efs.id
 }
