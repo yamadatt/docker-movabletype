@@ -44,34 +44,34 @@ resource "aws_efs_mount_target" "efs_public2" {
 
 
 
-data "aws_iam_policy_document" "policy" {
-  statement {
-    sid    = "ExampleStatement01"
-    effect = "Allow"
+# data "aws_iam_policy_document" "policy" {
+#   statement {
+#     sid    = "ExampleStatement01"
+#     effect = "Allow"
 
-    principals {
-      type        = "AWS"
-      identifiers = ["*"]
-    }
+#     principals {
+#       type        = "AWS"
+#       identifiers = ["*"]
+#     }
 
-    actions = [
-      "elasticfilesystem:*",
-      ]
+#     actions = [
+#       "elasticfilesystem:*",
+#       ]
 
-    resources = [aws_efs_file_system.efs.arn]
+#     resources = [aws_efs_file_system.efs.arn]
 
-    # condition {
-    #   test     = "Bool"
-    #   variable = "aws:SecureTransport"
-    #   values   = ["true"]
-    # }
-  }
-}
+#     # condition {
+#     #   test     = "Bool"
+#     #   variable = "aws:SecureTransport"
+#     #   values   = ["true"]
+#     # }
+#   }
+# }
 
-resource "aws_efs_file_system_policy" "policy" {
-  file_system_id = aws_efs_file_system.efs.id
-  policy         = data.aws_iam_policy_document.policy.json
-}
+# resource "aws_efs_file_system_policy" "policy" {
+#   file_system_id = aws_efs_file_system.efs.id
+#   policy         = data.aws_iam_policy_document.policy.json
+# }
 
 output "fileSystemId" {
   value = aws_efs_file_system.efs.id
